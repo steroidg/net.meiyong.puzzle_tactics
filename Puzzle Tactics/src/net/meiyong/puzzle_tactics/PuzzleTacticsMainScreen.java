@@ -1,42 +1,41 @@
 package net.meiyong.puzzle_tactics;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
 public class PuzzleTacticsMainScreen extends SurfaceView {
 	
 	private static final String TAG = PuzzleTacticsMainScreen.class.getSimpleName();
+	/*
 	private Display display = ((Activity) getContext()).getWindowManager().getDefaultDisplay();
 	@SuppressWarnings("deprecation")
 	private int width = display.getWidth();
 	@SuppressWarnings("deprecation")
 	private int height = display.getHeight();
-	private Button button;
+	*/
+	private RoundButton rbutton;
 	private Canvas canvas;
+	private PuzzleTacticsMainThread mainThread;
 	
 	
 	
 	public PuzzleTacticsMainScreen (Context context) {
 		super (context);
-		button = new Button (0, 0);
+		rbutton = new RoundButton (50, 50, 100, 50);
+		mainThread = new PuzzleTacticsMainThread(getHolder(), this);
 	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Log.d(TAG, "onTouch called");
+		Log.d(TAG, "onTouchEvent");
 		canvas = null;
 		canvas = getHolder().lockCanvas();
-		int buttonX = button.getX() + 10;
-		int buttonY = button.getY() + 10;
-		Log.d(TAG, "buttonX is " + buttonX + "buttonY is " + buttonY);
-		button.setX(buttonX);
-		button.setY(buttonY);
-		button.draw(canvas);
+		canvas.drawColor(Color.BLACK);
+		rbutton.draw(canvas);
 		getHolder().unlockCanvasAndPost(canvas);
 		return true;
 	}

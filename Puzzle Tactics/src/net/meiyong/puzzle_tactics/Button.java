@@ -1,41 +1,100 @@
 package net.meiyong.puzzle_tactics;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
+/**
+ * Button.java - Base class for all Buttons
+ * @author Dinan Yin
+ */
 public class Button {
 	
-	private Paint paint = new Paint();
-	private int x; //the x coordinate 
-	private int y; //the y coordinate
+	protected int x; //the x coordinate 
+	protected int y; //the y coordinate
+	protected int h; //height
+	protected int w; //width
 	
-	
-	//constructor
-	public Button (int x, int y) {
+	/**
+	 * Constructor for Button class
+	 * @param x Centre position x of the button
+	 * @param y Centre position y of the button
+	 * @param h Height of the button
+	 * @param w width of the button
+	 */
+	public Button (int x, int y, int h, int w) {
 		this.x = x;
 		this.y = y;
+		this.h = h;
+		this.w = w;
 	}
 	
+	/**
+	 * Set the x position of the button
+	 * @param x Position x of the button
+	 */
 	public void setX (int x) {
 		this.x = x;
 	}
 	
+	/**
+	 * Set the y position of the button
+	 * @param y Position y of the button
+	 */
 	public void setY (int y) {
 		this.y = y;
 	}
 	
+	/**
+	 * Set the height of the button
+	 * @param x Height of the button
+	 */
+	public void setHeight (int h) {
+		this.h = h;
+	}
+	
+	/**
+	 * Set the width of the button
+	 * @param y Width of the button
+	 */
+	public void setWidth (int w) {
+		this.w = w;
+	}
+	
+	/**
+	 * Get the x position of the button
+	 * @return Position x of the button
+	 */
 	public int getX () {
 		return x;
 	}
 	
+	/**
+	 * Get the y position of the button
+	 * @return Position y of the button
+	 */
 	public int getY () {
 		return y;
 	}
 	
+	/**
+	 * Get the height of the button
+	 * @return Height of the button
+	 */
+	public int getHeight () {
+		return h;
+	}
+	
+	/**
+	 * Get the width of the button
+	 * @return width of the button
+	 */
+	public int getWidth () {
+		return w;
+	}
+	
+	/**
+	 * Dummy method for the subclasses to draw the actual button 
+	 * @param canvas Canvas to draw on
+	 */
 	public void draw (Canvas canvas) {
-		paint.setColor(Color.GREEN);
-		canvas.drawCircle(x, y, 100, paint);
-//		canvas.drawLine(x+100, 0, 0, y+1020, paint);
 	}
 }
