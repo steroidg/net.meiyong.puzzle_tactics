@@ -21,15 +21,15 @@ public class RoundButton extends Button {
 	 * Constructor for the RoundButton class
 	 * @param x Centre position x of the button
 	 * @param y Centre position y of the button
-	 * @param h Height of the button
 	 * @param w width of the button
+	 * @param h Height of the button
 	 */
-	public RoundButton (int x, int y, int h, int w) {
-		super(x,y,h,w);
+	public RoundButton (int x, int y, int w, int h) {
+		super(x,y,w,h);
 		this.x = x;
 		this.y = y;
-		this.h = h;
 		this.w = w;
+		this.h = h;
 		rectf = new RectF();
 	}
 	
@@ -40,11 +40,10 @@ public class RoundButton extends Button {
 	@Override
 	public void draw (Canvas canvas) {
 		paint.setColor(Color.YELLOW);
-		Log.d(TAG, "this.x " + x + " this.y is " + y);
-		rectf.top = x - h/2;
-		rectf.bottom = x + h/2;
-		rectf.left = y - w/2;
-		rectf.right = y + w/2;
+		rectf.top = y - h/2;
+		rectf.bottom = y + h/2;
+		rectf.left = x - w/2;
+		rectf.right = x + w/2;
 		canvas.drawOval(rectf, paint);
 	}
 }
