@@ -31,9 +31,7 @@ public class PuzzleTacticsMainThread extends Thread {
 	public void run() {
 		Log.d(TAG, "run");
 		Canvas canvas;
-		Log.d(TAG, "run2");
 		while (this.running) {
-			Log.d(TAG, "running");
 			canvas = null;
 			canvas = this.surfaceHolder.lockCanvas();
 			canvas.drawColor(Color.BLACK);
