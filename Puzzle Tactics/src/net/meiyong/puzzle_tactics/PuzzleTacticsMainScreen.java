@@ -1,5 +1,6 @@
 package net.meiyong.puzzle_tactics;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
@@ -28,7 +29,21 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Log.d(TAG, "onTouchEvent");
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			if ((event.getX() < 100 &&  event.getX() > 0) && 
+					(event.getY() < 75 && event.getY() > 25)) {
+				mainThread.setRunning(false);
+				((Activity)getContext()).finish();
+			} else {
+				Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
+			}
+		}
+		
+		if (event.getAction() == MotionEvent.ACTION_MOVE) {
+		}
+		
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+		}
 		return true;
 	}
 	
