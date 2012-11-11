@@ -10,8 +10,8 @@ public class Button {
 	
 	protected int x; //the x coordinate 
 	protected int y; //the y coordinate
-	protected int h; //height
 	protected int w; //width
+	protected int h; //height
 	
 	/**
 	 * Constructor for Button class
@@ -20,11 +20,11 @@ public class Button {
 	 * @param h Height of the button
 	 * @param w width of the button
 	 */
-	public Button (int x, int y, int h, int w) {
+	public Button (int x, int y, int w, int h) {
 		this.x = x;
 		this.y = y;
-		this.h = h;
 		this.w = w;
+		this.h = h;
 	}
 	
 	/**
