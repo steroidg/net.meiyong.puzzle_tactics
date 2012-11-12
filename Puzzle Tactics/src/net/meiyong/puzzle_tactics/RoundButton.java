@@ -26,10 +26,6 @@ public class RoundButton extends Button {
 	 */
 	public RoundButton (int x, int y, int w, int h) {
 		super(x,y,w,h);
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
 		rectf = new RectF();
 	}
 	
@@ -39,6 +35,7 @@ public class RoundButton extends Button {
 	 */
 	@Override
 	public void draw (Canvas canvas) {
+		Log.d(TAG, "x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		paint.setColor(Color.YELLOW);
 		rectf.top = y - h/2;
 		rectf.bottom = y + h/2;
