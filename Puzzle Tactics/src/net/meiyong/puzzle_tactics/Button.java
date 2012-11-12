@@ -31,7 +31,7 @@ public class Button {
 	 * Set the x position of the button
 	 * @param x Position x of the button
 	 */
-	public void setX (int x) {
+	protected void setX (int x) {
 		this.x = x;
 	}
 	
@@ -39,7 +39,7 @@ public class Button {
 	 * Set the y position of the button
 	 * @param y Position y of the button
 	 */
-	public void setY (int y) {
+	protected void setY (int y) {
 		this.y = y;
 	}
 	
@@ -47,7 +47,7 @@ public class Button {
 	 * Set the height of the button
 	 * @param x Height of the button
 	 */
-	public void setHeight (int h) {
+	protected void setHeight (int h) {
 		this.h = h;
 	}
 	
@@ -55,7 +55,7 @@ public class Button {
 	 * Set the width of the button
 	 * @param y Width of the button
 	 */
-	public void setWidth (int w) {
+	protected void setWidth (int w) {
 		this.w = w;
 	}
 	
@@ -63,7 +63,7 @@ public class Button {
 	 * Get the x position of the button
 	 * @return Position x of the button
 	 */
-	public int getX () {
+	protected int getX () {
 		return x;
 	}
 	
@@ -71,7 +71,7 @@ public class Button {
 	 * Get the y position of the button
 	 * @return Position y of the button
 	 */
-	public int getY () {
+	protected int getY () {
 		return y;
 	}
 	
@@ -79,7 +79,7 @@ public class Button {
 	 * Get the height of the button
 	 * @return Height of the button
 	 */
-	public int getHeight () {
+	protected int getHeight () {
 		return h;
 	}
 	
@@ -87,7 +87,7 @@ public class Button {
 	 * Get the width of the button
 	 * @return width of the button
 	 */
-	public int getWidth () {
+	protected int getWidth () {
 		return w;
 	}
 	
@@ -95,6 +95,6 @@ public class Button {
 	 * Dummy method for the subclasses to draw the actual button 
 	 * @param canvas Canvas to draw on
 	 */
-	public void draw (Canvas canvas) {
+	protected void draw (Canvas canvas) {
 	}
 }
