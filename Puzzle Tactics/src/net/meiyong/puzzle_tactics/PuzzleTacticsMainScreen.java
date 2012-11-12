@@ -11,48 +11,45 @@ import android.view.SurfaceView;
 public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final String TAG = PuzzleTacticsMainScreen.class.getSimpleName();
-	private RoundButton closeButton;
-	private RoundButton endTurnButton;
 	private RoundButton moveButton;
+	private SidePanel sidePanel;
 	private PuzzleTacticsMainThread mainThread;
 	private int nTurn;
 	
+	/**
+	 * Constructor of PuzzleTacticsMainScreen class
+	 * @param context Context of the SurfaceView class
+	 */
 	public PuzzleTacticsMainScreen (Context context) {
 		super (context);
-		SurfaceHolder surfaceHolder = getHolder();
 		Log.d(TAG, "Constructor");
+		SurfaceHolder surfaceHolder = getHolder();
 		
 		// Get the callback of this surfaceHolder, surfaceCreated won't be called if this is not done.
 		surfaceHolder.addCallback(this);
-		closeButton = new RoundButton (50, 25, 100, 50);
-		endTurnButton = new RoundButton (200, 25, 100, 50);
+		
 		moveButton = new RoundButton (400, 25, 100, 50);
 		mainThread = new PuzzleTacticsMainThread(getHolder(), this);
+		sidePanel = new SidePanel (50, 300, 100, 600, this);
 		nTurn = 0;
 		setFocusable(true);
 	}
 	
+	/**
+	 * Event handler for onTouchEvent
+	 * @param event MotionEvent
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
+		if ((event.getX() < (sidePanel.getX() + sidePanel.getWidth()/2) &&
+				event.getX() > (sidePanel.getX() - sidePanel.getWidth()/2)) && 
+				(event.getY() < (sidePanel.getY() + sidePanel.getHeight()/2) &&
+						event.getY() > (sidePanel.getY() - sidePanel.getHeight()/2))) {
+			sidePanel.handleEvent(event);
+		}
+		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-			
-			if ((event.getX() < (endTurnButton.getX() + endTurnButton.getWidth()/2) &&
-					event.getX() > (endTurnButton.getX() - endTurnButton.getWidth()/2)) && 
-					(event.getY() < (endTurnButton.getY() + endTurnButton.getHeight()/2) &&
-							event.getY() > (endTurnButton.getY() - endTurnButton.getHeight()/2))) {
-				this.newTurn();
-			}
-			// This is the close button
-			
-			if ((event.getX() < (closeButton.getX() + closeButton.getWidth()/2) &&
-					event.getX() > (closeButton.getX() - closeButton.getWidth()/2)) && 
-					(event.getY() < (closeButton.getY() + closeButton.getHeight()/2) &&
-							event.getY() > (closeButton.getY() - closeButton.getHeight()/2))) {
-				mainThread.setRunning(false);
-				((Activity)getContext()).finish();
-			}
-			
 		}
 		
 		if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -65,8 +62,8 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		mainThread.setRunning(true);
-		mainThread.start();
+		boolean turnOn = true;
+		this.setThreadStatus(turnOn);
 	}
 	
 	@Override
@@ -86,15 +83,32 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 		}
 	}
 	
+	/**
+	 * Render the output onto the canvas
+	 * @param canvas Canvas to draw on
+	 */
+	protected void render(Canvas canvas) {
+		sidePanel.draw(canvas);
+		moveButton.draw(canvas);
+	}
+		
 	protected void newTurn () {
 		Log.d(TAG, "nTurn = " + nTurn);
 		nTurn++;
 		moveButton.setY(moveButton.getY() + 10);
 	}
 	
-	protected void render(Canvas canvas) {
-		closeButton.draw(canvas);
-		moveButton.draw(canvas);
-		endTurnButton.draw(canvas);
+	/**
+	 * Sets the status of the thread between on and off
+	 * @param turnOn boolean variable of whether to turn on (true) or off (false) the thread
+	 */
+	protected void setThreadStatus(boolean turnOn) {
+		if (turnOn) {
+			mainThread.setRunning(true);
+			mainThread.start();
+		} else {
+			mainThread.setRunning(false);
+			((Activity)getContext()).finish();
+		}
 	}
 }
