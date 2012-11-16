@@ -1,7 +1,6 @@
 package net.meiyong.puzzle_tactics;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
@@ -16,6 +15,7 @@ public class RoundButton extends Button {
 	private static final String TAG = RoundButton.class.getSimpleName();
 	private Paint paint = new Paint();
 	private RectF rectf;
+	private int c;
 	
 	/**
 	 * Constructor for the RoundButton class
@@ -24,9 +24,10 @@ public class RoundButton extends Button {
 	 * @param w width of the button
 	 * @param h Height of the button
 	 */
-	public RoundButton (int x, int y, int w, int h) {
+	public RoundButton (int x, int y, int w, int h, int c) {
 		super(x,y,w,h);
-		Log.d(TAG, "RoundButton created x=" + x + " y=" + y + " w=" + w + " h=" + h);
+		this.c = c;
+		Log.d(TAG, "RoundButton created x=" + x + " y=" + y + " w=" + w + " h=" + h + " c" + c);
 		rectf = new RectF();
 	}
 	
@@ -36,7 +37,7 @@ public class RoundButton extends Button {
 	 */
 	@Override
 	public void draw (Canvas canvas) {
-		paint.setColor(Color.YELLOW);
+		paint.setColor(c);
 		rectf.top = y - h/2;
 		rectf.bottom = y + h/2;
 		rectf.left = x - w/2;
