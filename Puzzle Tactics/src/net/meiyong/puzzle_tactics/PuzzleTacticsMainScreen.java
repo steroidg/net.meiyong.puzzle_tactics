@@ -11,10 +11,13 @@ import android.view.SurfaceView;
 public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final String TAG = PuzzleTacticsMainScreen.class.getSimpleName();
-	private RoundButton moveButton;
+//	private RoundButton moveButton;
 	private SidePanel sidePanel;
+	private PuzzlePanel puzzlePanel;
 	private PuzzleTacticsMainThread mainThread;
 	private int nTurn;
+	private int screenWidth;
+	private int screenHeight;
 	
 	/**
 	 * Constructor of PuzzleTacticsMainScreen class
@@ -27,12 +30,11 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 		
 		// Get the callback of this surfaceHolder, surfaceCreated won't be called if this is not done.
 		surfaceHolder.addCallback(this);
-		
-		moveButton = new RoundButton (400, 25, 100, 50);
 		mainThread = new PuzzleTacticsMainThread(getHolder(), this);
-		sidePanel = new SidePanel (50, 300, 100, 600, this);
 		nTurn = 0;
 		setFocusable(true);
+		
+//		moveButton = new RoundButton (400, 25, 100, 50);
 	}
 	
 	/**
@@ -62,6 +64,10 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
+		screenWidth=getWidth();
+		screenHeight=getHeight();
+		sidePanel = new SidePanel (screenWidth/8/2, screenHeight/2, screenWidth/8, screenHeight, this);
+		puzzlePanel = new PuzzlePanel ((screenWidth-screenWidth/8)/2+screenWidth/8, screenHeight/2, (screenWidth-screenWidth/8), screenHeight, this);
 		boolean turnOn = true;
 		this.setThreadStatus(turnOn);
 	}
@@ -89,13 +95,14 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	 */
 	protected void render(Canvas canvas) {
 		sidePanel.draw(canvas);
-		moveButton.draw(canvas);
+		puzzlePanel.draw(canvas);
+//		moveButton.draw(canvas);
 	}
 		
 	protected void newTurn () {
 		Log.d(TAG, "nTurn = " + nTurn);
 		nTurn++;
-		moveButton.setY(moveButton.getY() + 10);
+//		moveButton.setY(moveButton.getY() + 10);
 	}
 	
 	/**
