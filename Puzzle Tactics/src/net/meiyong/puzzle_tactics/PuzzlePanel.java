@@ -3,6 +3,8 @@
  */
 package net.meiyong.puzzle_tactics;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +34,8 @@ public class PuzzlePanel extends Container {
 		int buttonY = 0;
 		int buttonWidth = w/8;
 		int buttonHeight = h/8;
+		int buttonColour = 0;
+		Random random = new Random();
 		while (i < buttonArray.length) {
 			int j=0;
 			Log.d(TAG, "i" + i);
@@ -39,8 +43,28 @@ public class PuzzlePanel extends Container {
 				Log.d(TAG, "j" + j);
 				buttonX=(x-w/2) + buttonWidth*j + buttonWidth/2;
 				buttonY=(y-h/2) + buttonHeight*i + buttonHeight/2;
-				Log.d(TAG, "buttonPos x=" + buttonX + " y=" + buttonY + " width=" + buttonWidth + " height=" + buttonHeight);
-				buttonArray[i][j] = new RoundButton (buttonX, buttonY, buttonWidth, buttonHeight);
+				switch (random.nextInt(6)) {
+				case 0:
+					buttonColour = Color.MAGENTA;
+					break;
+				case 1:
+					buttonColour = Color.BLACK;
+					break;
+				case 2:
+					buttonColour = Color.RED;
+					break;
+				case 3:
+					buttonColour = Color.BLUE;
+					break;
+				case 4:
+					buttonColour = Color.YELLOW;
+					break;
+				case 5:
+					buttonColour = Color.CYAN;
+					break;
+				}
+				Log.d(TAG, "buttonPos x=" + buttonX + " y=" + buttonY + " width=" + buttonWidth + " height=" + buttonHeight + " colour=" + buttonColour);
+				buttonArray[i][j] = new RoundButton (buttonX, buttonY, buttonWidth, buttonHeight, buttonColour);
 				j++;
 			}
 			i++;
