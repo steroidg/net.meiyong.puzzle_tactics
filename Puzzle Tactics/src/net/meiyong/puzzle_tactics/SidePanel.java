@@ -27,8 +27,8 @@ public class SidePanel extends Container{
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "SidePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
-		closeButton = new RoundButton (x, h/8, w, h/4);
-		endTurnButton = new RoundButton (x, 3*(h/8), w, h/4);
+		closeButton = new RoundButton (x, h/8, w, h/4, Color.RED);
+		endTurnButton = new RoundButton (x, 3*(h/8), w, h/4, Color.GRAY);
 	}
 	
 	@Override
