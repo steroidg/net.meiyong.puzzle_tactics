@@ -11,7 +11,6 @@ import android.view.SurfaceView;
 public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final String TAG = PuzzleTacticsMainScreen.class.getSimpleName();
-//	private RoundButton moveButton;
 	private SidePanel sidePanel;
 	private PuzzlePanel puzzlePanel;
 	private PuzzleTacticsMainThread mainThread;
@@ -34,7 +33,6 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 		nTurn = 0;
 		setFocusable(true);
 		
-//		moveButton = new RoundButton (400, 25, 100, 50);
 	}
 	
 	/**
@@ -94,15 +92,15 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	 * @param canvas Canvas to draw on
 	 */
 	protected void render(Canvas canvas) {
+//		Log.d(TAG, "render");
 		sidePanel.draw(canvas);
 		puzzlePanel.draw(canvas);
-//		moveButton.draw(canvas);
 	}
 		
 	protected void newTurn () {
 		Log.d(TAG, "nTurn = " + nTurn);
+//		puzzlePanel.correctPuzzle();
 		nTurn++;
-//		moveButton.setY(moveButton.getY() + 10);
 	}
 	
 	/**
