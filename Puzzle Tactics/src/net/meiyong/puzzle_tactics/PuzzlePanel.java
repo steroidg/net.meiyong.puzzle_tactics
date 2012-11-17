@@ -25,10 +25,54 @@ public class PuzzlePanel extends Container {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "PuzzlePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
-		pupulatePuzzle(buttonArray);
+		while (checkPuzzle()) {
+			pupulatePuzzle();
+		}
 	}
 	
-	private void pupulatePuzzle (RoundButton[][] buttonArray) {
+	private boolean checkPuzzle() {
+		int i = 0;
+		int buttonColour = 0;
+		boolean problemFound = false;
+		
+		while (i < buttonArray.length) {
+			int j = 0;
+			while (j < buttonArray[i].length) {
+				if (buttonArray[i][j] == null) {
+//					Log.d(TAG, i + " " + j + "null");
+					problemFound = true;
+					return (problemFound);
+				}
+				
+				//check_horizontal
+				if ((j > 0) && (j < (buttonArray[i].length - 1))) {
+					if ((buttonArray[i][j-1].getColour() == buttonArray[i][j].getColour()) &&
+							(buttonArray[i][j].getColour() == buttonArray[i][j+1].getColour())) {
+						Log.d(TAG, "triple horizontal found j=" + j + " i=" + i + " colour=" + buttonColour);
+						buttonArray[i][j]=null;
+						problemFound = true;
+						return (problemFound);
+					}
+				}
+				
+				//check_vertical
+				if ((i > 0) && (i < (buttonArray.length -1))) {
+					if ((buttonArray[i-1][j].getColour() == buttonArray[i][j].getColour()) &&
+							(buttonArray[i][j].getColour() == buttonArray[i+1][j].getColour())) {
+						Log.d(TAG, "triple vertical found j=" + j + " i=" + i + " colour=" + buttonColour);
+						buttonArray[i][j]=null;
+						problemFound = true;
+						return (problemFound);
+					}
+				}
+				j++;
+			}
+			i++;
+		}
+		return (problemFound);
+	}
+	
+	private void pupulatePuzzle () {
 		int i = 0;
 		int buttonX = 0;
 		int buttonY = 0;
@@ -37,34 +81,37 @@ public class PuzzlePanel extends Container {
 		int buttonColour = 0;
 		Random random = new Random();
 		while (i < buttonArray.length) {
+			Log.d(TAG, "populatePuzzle i=" + i);
 			int j=0;
-			Log.d(TAG, "i" + i);
 			while (j < buttonArray[i].length) {
-				Log.d(TAG, "j" + j);
-				buttonX=(x-w/2) + buttonWidth*j + buttonWidth/2;
-				buttonY=(y-h/2) + buttonHeight*i + buttonHeight/2;
-				switch (random.nextInt(6)) {
-				case 0:
-					buttonColour = Color.MAGENTA;
-					break;
-				case 1:
-					buttonColour = Color.BLACK;
-					break;
-				case 2:
-					buttonColour = Color.RED;
-					break;
-				case 3:
-					buttonColour = Color.BLUE;
-					break;
-				case 4:
-					buttonColour = Color.YELLOW;
-					break;
-				case 5:
-					buttonColour = Color.CYAN;
-					break;
+				if (buttonArray[i][j] == null) {
+					Log.d(TAG, "populatePuzzle" + i + " " + j + "null");
+					Log.d(TAG, "button null");
+					buttonX=(x-w/2) + buttonWidth*j + buttonWidth/2;
+					buttonY=(y-h/2) + buttonHeight*i + buttonHeight/2;
+					switch (random.nextInt(6)) {
+					case 0:
+						buttonColour = Color.MAGENTA;
+						break;
+					case 1:
+						buttonColour = Color.BLACK;
+						break;
+					case 2:
+						buttonColour = Color.RED;
+						break;
+					case 3:
+						buttonColour = Color.BLUE;
+						break;
+					case 4:
+						buttonColour = Color.YELLOW;
+						break;
+					case 5:
+						buttonColour = Color.CYAN;
+						break;
+					}
+					//Log.d(TAG, "buttonPos x=" + buttonX + " y=" + buttonY + " width=" + buttonWidth + " height=" + buttonHeight + " colour=" + buttonColour);
+					buttonArray[i][j] = new RoundButton (buttonX, buttonY, buttonWidth, buttonHeight, buttonColour);
 				}
-				Log.d(TAG, "buttonPos x=" + buttonX + " y=" + buttonY + " width=" + buttonWidth + " height=" + buttonHeight + " colour=" + buttonColour);
-				buttonArray[i][j] = new RoundButton (buttonX, buttonY, buttonWidth, buttonHeight, buttonColour);
 				j++;
 			}
 			i++;
