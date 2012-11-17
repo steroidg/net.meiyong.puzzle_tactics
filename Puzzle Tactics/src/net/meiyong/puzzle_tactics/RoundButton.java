@@ -27,8 +27,12 @@ public class RoundButton extends Button {
 	public RoundButton (int x, int y, int w, int h, int c) {
 		super(x,y,w,h);
 		this.c = c;
-		Log.d(TAG, "RoundButton created x=" + x + " y=" + y + " w=" + w + " h=" + h + " c" + c);
+//		Log.d(TAG, "RoundButton created x=" + x + " y=" + y + " w=" + w + " h=" + h + " c" + c);
 		rectf = new RectF();
+	}
+	
+	protected int getColour() {
+		return c;
 	}
 	
 	/**
