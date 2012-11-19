@@ -41,12 +41,19 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
+//		Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
 		if ((event.getX() < (sidePanel.getX() + sidePanel.getWidth()/2) &&
 				event.getX() > (sidePanel.getX() - sidePanel.getWidth()/2)) && 
 				(event.getY() < (sidePanel.getY() + sidePanel.getHeight()/2) &&
 						event.getY() > (sidePanel.getY() - sidePanel.getHeight()/2))) {
 			sidePanel.handleEvent(event);
+		}
+		
+		if ((event.getX() < (puzzlePanel.getX() + puzzlePanel.getWidth()/2) &&
+				event.getX() > (puzzlePanel.getX() - puzzlePanel.getWidth()/2)) && 
+				(event.getY() < (puzzlePanel.getY() + puzzlePanel.getHeight()/2) &&
+						event.getY() > (puzzlePanel.getY() - puzzlePanel.getHeight()/2))) {
+			puzzlePanel.handleEvent(event);
 		}
 		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -99,7 +106,6 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 		
 	protected void newTurn () {
 		Log.d(TAG, "nTurn = " + nTurn);
-//		puzzlePanel.correctPuzzle();
 		nTurn++;
 	}
 	
