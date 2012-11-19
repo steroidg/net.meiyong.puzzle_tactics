@@ -33,7 +33,7 @@ public class SidePanel extends Container{
 	
 	@Override
 	public void handleEvent (MotionEvent event) {
-			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
 			
 			// This is the endTurn button
