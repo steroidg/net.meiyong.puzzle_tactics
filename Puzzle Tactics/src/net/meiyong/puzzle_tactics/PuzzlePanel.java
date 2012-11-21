@@ -23,30 +23,41 @@ public class PuzzlePanel extends Container {
 	private static final String TAG = PuzzlePanel.class.getSimpleName();
 	private Paint paint = new Paint();
 	private RoundButton[][] buttonArray = new RoundButton[8][8];
-	private List<int[]> selectedButtons = new ArrayList<int[]>();
-	private int maxSelectedButtons = 2;
+	private int[] selectedButton = new int[2];
 
 	public PuzzlePanel (int x, int y, int w, int h, PuzzleTacticsMainScreen mainScreen) {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "PuzzlePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
-		
-		for (int i=0; i < maxSelectedButtons; i++) {
-			selectedButtons.add(new int[] {-1, -1});
-		}
-		
+
+		resetButtonSelection();
 		pupulatePuzzle();
 		refreshPuzzle();
 	}
 	
+	private void resetButtonSelection() {
+		selectedButton[0] = -500;
+		selectedButton[1] = -500;
+	}
+	
+	private boolean buttonSelected() {
+		if ((selectedButton[0] == -500) && (selectedButton[1] == -500)) {
+			Log.d(TAG, "return false");
+			return false;
+		}
+		Log.d(TAG, "return true");
+		return true;
+	}
+	
 	private void refreshPuzzle() {
-		while (checkPuzzle()) {
+		boolean removeButton = true;
+		while (checkPuzzle(removeButton)) {
 			sortPuzzle();
 			pupulatePuzzle();
 		}
 	}
 	
-	private boolean checkPuzzle() {
+	private boolean checkPuzzle(boolean removeButton) {
 		boolean problemFound = false;
 		List<int[]> buttonsToRemove = new ArrayList<int[]>();
 		int nButtonsToRemove = 0;
@@ -106,9 +117,11 @@ public class PuzzlePanel extends Container {
 		}
 		
 		// Remove all the buttons collected
-		for (int k=0; k<nButtonsToRemove; k++) {
-			//Log.d(TAG, "buttonToRemove i=" + buttonsToRemove.get(k)[0] + " j=" + buttonsToRemove.get(k)[1]);
-			buttonArray[buttonsToRemove.get(k)[0]][buttonsToRemove.get(k)[1]] = null;
+		if (removeButton) {
+			for (int k=0; k<nButtonsToRemove; k++) {
+				//Log.d(TAG, "buttonToRemove i=" + buttonsToRemove.get(k)[0] + " j=" + buttonsToRemove.get(k)[1]);
+				buttonArray[buttonsToRemove.get(k)[0]][buttonsToRemove.get(k)[1]] = null;
+			}
 		}
 		return (problemFound);
 	}
@@ -200,29 +213,35 @@ public class PuzzlePanel extends Container {
 							(event.getY() < (buttonArray[i][j].getY() + buttonArray[i][j].getHeight()/2) &&
 									event.getY() > (buttonArray[i][j].getY() - buttonArray[i][j].getHeight()/2))) {
 						
-						for (int k = 0; k < maxSelectedButtons; k++) {
-							Log.d(TAG, "button selected i=" +  selectedButtons.get(k)[0] + " j=" + selectedButtons.get(k)[1]);
-							if (selectedButtons.get(k)[0] < 0 && selectedButtons.get(k)[1] < 0) {
-								selectedButtons.set(k, new int [] {i, j});
-								Log.d(TAG, "buttonSelected k=" + k + " i=" +  selectedButtons.get(k)[0] + " j=" + selectedButtons.get(k)[1]);
-								//Max selected buttons reached
-								if (k == maxSelectedButtons - 1) {
+						Log.d(TAG, "button touched i=" + i + " j=" + j);
+						if (!buttonSelected()) {
+							Log.d(TAG, "1st buttonSelected i=" + i + " j=" + j);
+							selectedButton[0] = i;
+							selectedButton[1] = j;
+						} else {
+							if ((selectedButton[0] == i) && (selectedButton[1] == j)) {
+								Log.d(TAG, "1st button deSelected i=" + i + " j=" + j);
+								resetButtonSelection();
+							} else {
+								if ((selectedButton[0] + 1 == i) || (selectedButton[0] - 1 == i) ||
+										(selectedButton[1] + 1 == j) || (selectedButton[1] - 1 == j)) {
+									Log.d(TAG, "2nd buttonSelected i=" + i + " j=" + j);
+									Log.d(TAG, "selectedButton[0]=" + selectedButton[0] + "selectedButton[1]" + selectedButton[1]);
 									RoundButton tmpButton = null;
-									tmpButton = buttonArray[selectedButtons.get(0)[0]][selectedButtons.get(0)[1]];
-									buttonArray[selectedButtons.get(0)[0]][selectedButtons.get(0)[1]] = buttonArray[selectedButtons.get(1)[0]][selectedButtons.get(1)[1]];
-									buttonArray[selectedButtons.get(1)[0]][selectedButtons.get(1)[1]] = tmpButton;
+									tmpButton = buttonArray[selectedButton[0]][selectedButton[1]];
+									buttonArray[selectedButton[0]][selectedButton[1]] = buttonArray[i][j];
+									buttonArray[i][j] = tmpButton;
+									if (!checkPuzzle(false)) {
+										Log.d(TAG, "no resolvable, undo");
+										tmpButton = null;
+										tmpButton = buttonArray[selectedButton[0]][selectedButton[1]];
+										buttonArray[selectedButton[0]][selectedButton[1]] = buttonArray[i][j];
+										buttonArray[i][j] = tmpButton;
+									}
 									Log.d(TAG, "tmpButton coulour= " + tmpButton.getColour());
-									refreshPuzzle();
-									selectedButtons.set(0, new int [] {-1, -1});
-									selectedButtons.set(1, new int [] {-1, -1});
-									break;
-								} else {
-									break;
 								}
-							} else if (selectedButtons.get(k)[0] == i && selectedButtons.get(k)[1] == j){
-								selectedButtons.set(k, new int [] {-1, -1});
-								Log.d(TAG, "button deselected i=" +  selectedButtons.get(k)[0] + " j=" + selectedButtons.get(k)[1]);
-								break;
+								refreshPuzzle();
+								resetButtonSelection();
 							}
 						}
 					}
