@@ -12,19 +12,22 @@ public class Button {
 	protected int y; //the y coordinate
 	protected int w; //width
 	protected int h; //height
+	protected int c; //colour
 	
 	/**
 	 * Constructor for Button class
 	 * @param x Centre position x of the button
 	 * @param y Centre position y of the button
-	 * @param h Height of the button
 	 * @param w width of the button
+	 * @param h Height of the button
+	 * @param c colour of the button
 	 */
-	public Button (int x, int y, int w, int h) {
+	public Button (int x, int y, int w, int h, int c) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		this.c = c;
 	}
 	
 	/**
@@ -89,6 +92,14 @@ public class Button {
 	 */
 	protected int getWidth () {
 		return w;
+	}
+	
+	/**
+	 * Get the colour of the button
+	 * @return colour of the button
+	 */
+	protected int getColour() {
+		return c;
 	}
 	
 	/**
