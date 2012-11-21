@@ -3,7 +3,6 @@ package net.meiyong.puzzle_tactics;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 /**
  * RoundButton.java - Class for drawing a round button sub-class of the Button class 
@@ -12,10 +11,8 @@ import android.util.Log;
  */
 public class RoundButton extends Button {
 	
-	private static final String TAG = RoundButton.class.getSimpleName();
 	private Paint paint = new Paint();
 	private RectF rectf;
-	private int c;
 	
 	/**
 	 * Constructor for the RoundButton class
@@ -25,14 +22,8 @@ public class RoundButton extends Button {
 	 * @param h Height of the button
 	 */
 	public RoundButton (int x, int y, int w, int h, int c) {
-		super(x,y,w,h);
-		this.c = c;
-//		Log.d(TAG, "RoundButton created x=" + x + " y=" + y + " w=" + w + " h=" + h + " c" + c);
+		super(x,y,w,h,c);
 		rectf = new RectF();
-	}
-	
-	protected int getColour() {
-		return c;
 	}
 	
 	/**
