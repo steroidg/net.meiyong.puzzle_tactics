@@ -57,8 +57,18 @@ public class PuzzlePanel extends Container {
 		}
 	}
 	
+	private void resetPuzzle() {
+		for (int i = 0; i < buttonArray.length; i++) {
+			for (int j = 0; j < buttonArray[i].length; j++) {
+				buttonArray[i][j] = null;
+			}
+		}
+		Log.d(TAG, "puzzle reset");
+	}
+	
 	private boolean checkPuzzle(boolean removeButton) {
-		boolean problemFound = false;
+		boolean refreshNeeded = false;
+		boolean validPuzzle = false;
 		List<int[]> buttonsToRemove = new ArrayList<int[]>();
 		int nButtonsToRemove = 0;
 		
@@ -67,8 +77,8 @@ public class PuzzlePanel extends Container {
 				// If any button is null, it should be populated first
 				if (buttonArray[i][j] == null) {
 					//Log.d(TAG, i + " " + j + "null");
-					problemFound = true;
-					return (problemFound);
+					refreshNeeded = true;
+					return (refreshNeeded);
 				}
 				
 				//check vertical triples
@@ -88,7 +98,8 @@ public class PuzzlePanel extends Container {
 							buttonsToRemove.add(new int[] {i, k});
 							nButtonsToRemove++;
 						}
-						problemFound = true;
+						validPuzzle = true;
+						refreshNeeded = true;
 					}
 				}
 				
@@ -110,20 +121,104 @@ public class PuzzlePanel extends Container {
 							buttonsToRemove.add(new int[] {k, j});
 							nButtonsToRemove++;
 						}
-						problemFound = true;
+						validPuzzle = true;
+						refreshNeeded = true;
+					}
+				}
+				
+				//check for invalid puzzle
+				if (!validPuzzle) {
+					// horizontal checks
+					if (i < buttonArray.length - 2) {
+						if (buttonArray[i][j].getColour() == buttonArray[i+1][j].getColour()) {
+							if (((i + 3) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i+3][j].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+1) + " " + j + "," + (i+3) + " " + j + "]");
+								validPuzzle = true;
+							} else if (((j - 1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i+2][j-1].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+1) + " " + j + "," + (i+2) + " " + (j-1) + "]");
+								validPuzzle = true;
+							} else if (((j + 1) < buttonArray[i].length) && (buttonArray[i][j].getColour() == buttonArray[i+2][j+1].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+1) + " " + j + "," + (i+2) + " " + (j+1) + "]");
+								validPuzzle = true;
+							}
+						} else if (buttonArray[i][j].getColour() == buttonArray[i+2][j].getColour()) {
+							if (((i + 3) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i+3][j].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+2) + " " + j + "," + (i+3) + " " + j + "]");
+								validPuzzle = true;
+							} else if (((j - 1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i+1][j-1].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+1) + " " + (j-1) + "," + (i+2) + " " + j + "]");
+								validPuzzle = true;
+							} else if (((j + 1) < buttonArray[i].length) && (buttonArray[i][j].getColour() == buttonArray[i+1][j+1].getColour())) {
+								Log.d(TAG, "horizontal valid: [" + i + " " + j + "," + (i+1) + " " + (j+1) + "," + (i+2) + " " + j + "]");
+								validPuzzle = true;
+							}
+						} else if (((j+1) < buttonArray[i].length) && (buttonArray[i][j].getColour() == buttonArray[i+1][j+1].getColour())) {
+							if (buttonArray[i][j].getColour() == buttonArray[i+2][j+1].getColour()) {
+								Log.d(TAG, "diagonal valid: [" + i + " " + j + "," + (i+1) + " " + (j+1) + "," + (i+2) + " " + (j+1) + "]");
+								validPuzzle = true;
+							}
+						} else if (((j-1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i+1][j-1].getColour())) {
+							if (buttonArray[i][j].getColour() == buttonArray[i+2][j-1].getColour()) {
+								Log.d(TAG, "diagonal valid: [" + i + " " + j + "," + (i+1) + " " + (j-1) + "," + (i+2) + " " + (j-1) + "]");
+								validPuzzle = true;
+							}
+						}
+					}
+					// vertical checks
+					if (j < buttonArray[i].length - 2) {
+						if (buttonArray[i][j].getColour() == buttonArray[i][j+1].getColour()) {
+							if (((j + 3) < buttonArray[i].length) && (buttonArray[i][j].getColour() == buttonArray[i][j+3].getColour())) {
+								Log.d(TAG, "vertical valid: [" + i + " " + j + "," + i + " " + (j+1) + "," + i + " " + (j+3) + "]");
+								validPuzzle = true;
+							} else if (((i - 1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i-1][j+2].getColour())) {
+								Log.d(TAG, "vertial valid: [" + i + " " + j + "," + i + " " + (j+1) + "," + (i-1) + " " + (j+2) + "]");
+								validPuzzle = true;
+							} else if (((i + 1) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i+1][j+2].getColour())) {
+								Log.d(TAG, "vertical valid: [" + i + " " + j + "," + i + " " + (j+1) + "," + (i+1) + " " + (j+2) + "]");
+								validPuzzle = true;
+							}
+						} else if (buttonArray[i][j].getColour() == buttonArray[i][j+2].getColour()) {
+							if (((j + 3) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i][j+3].getColour())) {
+								Log.d(TAG, "vertical valid: [" + i + " " + j + "," + i + " " + (j+2) + "," + i + " " + (j+3) + "]");
+								validPuzzle = true;
+							} else if (((i - 1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i-1][j+1].getColour())) {
+								Log.d(TAG, "vertical valid: [" + i + " " + j + "," + i + " " + (j+2) + "," + (i-1) + " " + (j+1) + "]");
+								validPuzzle = true;
+							} else if (((i + 1) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i+1][j+1].getColour())) {
+								Log.d(TAG, "vertical valid: [" + i + " " + j + "," + i + " " + (j+2) + "," + (i+1) + " " + (j+1) + "]");
+								validPuzzle = true;
+							}
+						} else if (((i+1) < buttonArray.length) && (buttonArray[i][j].getColour() == buttonArray[i+1][j+1].getColour())) {
+							if (buttonArray[i][j].getColour() == buttonArray[i+1][j+2].getColour()) {
+								Log.d(TAG, "diagonal valid: [" + i + " " + j + "," + (i+1) + " " + (j+1) + "," + (i+1) + " " + (j+2) + "]");
+								validPuzzle = true;
+							}
+						} else if (((i-1) >= 0) && (buttonArray[i][j].getColour() == buttonArray[i-1][j+1].getColour())) {
+							if (buttonArray[i][j].getColour() == buttonArray[i-1][j+2].getColour()) {
+								Log.d(TAG, "diagonal valid: [" + i + " " + j + "," + (i-1) + " " + (j+1) + "," + (i-1) + " " + (j+2) + "]");
+								validPuzzle = true;
+							}
+						}
 					}
 				}
 			}
 		}
 		
-		// Remove all the buttons collected
+		// Invalid puzzle, reset puzzle
+		if (!validPuzzle) {
+			resetPuzzle();
+			refreshNeeded = true;
+			return (refreshNeeded);
+		}
+		
+		// Puzzle is valid, remove all the buttons collected if any
 		if (removeButton) {
 			for (int k=0; k<nButtonsToRemove; k++) {
 				//Log.d(TAG, "buttonToRemove i=" + buttonsToRemove.get(k)[0] + " j=" + buttonsToRemove.get(k)[1]);
 				buttonArray[buttonsToRemove.get(k)[0]][buttonsToRemove.get(k)[1]] = null;
 			}
 		}
-		return (problemFound);
+		return (refreshNeeded);
 	}
 	
 	private void sortPuzzle () {
@@ -156,7 +251,7 @@ public class PuzzlePanel extends Container {
 				
 				if (buttonArray[i][j] == null) {
 					Log.d(TAG, "i=" + i + " j=" + j + " null");
-					switch (random.nextInt(5)) {
+					switch (random.nextInt(9)) {
 						case 0:
 							buttonColour = Color.MAGENTA;
 							break;
@@ -171,6 +266,18 @@ public class PuzzlePanel extends Container {
 							break;
 						case 4:
 							buttonColour = Color.YELLOW;
+							break;
+						case 5:
+							buttonColour = Color.CYAN;
+							break;
+						case 6:
+							buttonColour = Color.WHITE;
+							break;
+						case 7:
+							buttonColour = Color.DKGRAY;
+							break;
+						case 8:
+							buttonColour = Color.LTGRAY;
 							break;
 					}
 					//Log.d(TAG, "buttonPos x=" + buttonX + " y=" + buttonY + " width=" + buttonWidth + " height=" + buttonHeight + " colour=" + buttonColour);
