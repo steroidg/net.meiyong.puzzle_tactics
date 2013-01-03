@@ -227,7 +227,7 @@ public class PuzzlePanel extends Container {
 			for (int j = buttonArray[i].length - 1; j >=0; j--) {
 				if (buttonArray[i][j] != null && (j == notNullIndex)) {
 					notNullIndex--;
-				} else if(buttonArray[i][j] != null && (j < notNullIndex))  {
+				} else if(buttonArray[i][j] != null && (j < notNullIndex)) {
 					buttonArray[i][notNullIndex] = buttonArray[i][j];
 					buttonArray[i][j]=null;
 					notNullIndex--;
