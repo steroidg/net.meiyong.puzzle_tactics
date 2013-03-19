@@ -3,11 +3,14 @@
  */
 package net.meiyong.puzzle_tactics;
 
+import android.util.Log;
+
 /**
  * @author Dinan Yin
  *
  */
 public class Character {
+	private static final String TAG = Character.class.getSimpleName();
 	protected int hitPoint;
 	protected int redMana;
 	protected int blueMana;
@@ -22,5 +25,15 @@ public class Character {
 		this.yellowMana = yellowMana;
 		this.purpleMana = purpleMana;
 		this.whiteMana = whiteMana;
+		Log.d(TAG, "chacacter Hitpoint = " + this.hitPoint);
+	}
+	
+	protected void addHitPoint (int hp) {
+		this.hitPoint += hp;
+	}
+	
+	protected int getHitPoint () {
+		Log.d(TAG, "chacacter Hitpoint = " + this.hitPoint);
+		return this.hitPoint;
 	}
 }
