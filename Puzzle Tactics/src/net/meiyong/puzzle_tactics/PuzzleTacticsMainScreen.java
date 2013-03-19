@@ -17,6 +17,7 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	private int nTurn;
 	private int screenWidth;
 	private int screenHeight;
+	private Character playerCharacter;
 	
 	/**
 	 * Constructor of PuzzleTacticsMainScreen class
@@ -71,8 +72,9 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 	public void surfaceCreated(SurfaceHolder holder) {
 		screenWidth=getWidth();
 		screenHeight=getHeight();
-		sidePanel = new SidePanel (screenWidth/8/2, screenHeight/2, screenWidth/8, screenHeight, this);
-		puzzlePanel = new PuzzlePanel ((screenWidth-screenWidth/8)/2+screenWidth/8, screenHeight/2, (screenWidth-screenWidth/8), screenHeight, this);
+		playerCharacter = new Character(1, 1, 1, 1, 1, 1);
+		sidePanel = new SidePanel (screenWidth/8/2, screenHeight/2, screenWidth/8, screenHeight, playerCharacter, this);
+		puzzlePanel = new PuzzlePanel ((screenWidth-screenWidth/8)/2+screenWidth/8, screenHeight/2, (screenWidth-screenWidth/8), screenHeight, playerCharacter, this);
 		boolean turnOn = true;
 		this.setThreadStatus(turnOn);
 	}
