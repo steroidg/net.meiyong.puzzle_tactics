@@ -25,7 +25,7 @@ public class PuzzlePanel extends Container {
 	private RoundButton[][] buttonArray = new RoundButton[8][8];
 	private int[] selectedButton = new int[2];
 
-	public PuzzlePanel (int x, int y, int w, int h, PuzzleTacticsMainScreen mainScreen) {
+	public PuzzlePanel (int x, int y, int w, int h, Character playerCharcter, PuzzleTacticsMainScreen mainScreen) {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "PuzzlePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
