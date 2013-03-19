@@ -216,6 +216,7 @@ public class PuzzlePanel extends Container {
 			for (int k=0; k<nButtonsToRemove; k++) {
 				//Log.d(TAG, "buttonToRemove i=" + buttonsToRemove.get(k)[0] + " j=" + buttonsToRemove.get(k)[1]);
 				buttonArray[buttonsToRemove.get(k)[0]][buttonsToRemove.get(k)[1]] = null;
+				
 			}
 		}
 		return (refreshNeeded);
