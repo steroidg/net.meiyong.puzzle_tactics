@@ -22,13 +22,18 @@ public class SidePanel extends Container{
 	private RectF rectf;
 	private RoundButton closeButton;
 	private RoundButton endTurnButton;
+	private RoundButton playerButton;
+	protected Character playerCharacter;
 	
-	public SidePanel (int x, int y, int w, int h, PuzzleTacticsMainScreen mainScreen) {
+	
+	public SidePanel (int x, int y, int w, int h, Character playerCharacter, PuzzleTacticsMainScreen mainScreen) {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "SidePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
+		this.playerCharacter = playerCharacter;
 		closeButton = new RoundButton (x, h/8, w, h/4, Color.RED);
 		endTurnButton = new RoundButton (x, 3*(h/8), w, h/4, Color.GRAY);
+		playerButton = new RoundButton (x, 5*(h/8), w, h/4, Color.RED);
 	}
 	
 	@Override
@@ -51,6 +56,15 @@ public class SidePanel extends Container{
 							event.getY() > (closeButton.getY() - closeButton.getHeight()/2))) {
 				mainScreen.setThreadStatus(false);
 			}
+			
+			// This is the player button
+			if ((event.getX() < (playerButton.getX() + playerButton.getWidth()/2) &&
+					event.getX() > (playerButton.getX() - playerButton.getWidth()/2)) && 
+					(event.getY() < (playerButton.getY() + playerButton.getHeight()/2) &&
+							event.getY() > (playerButton.getY() - playerButton.getHeight()/2))) {
+				int playerHitpoint = playerCharacter.getHitPoint();
+				Log.d(TAG, "SidePanel playerHitpoint = " + playerHitpoint);
+			}
 		}
 		
 		if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -70,5 +84,6 @@ public class SidePanel extends Container{
 		canvas.drawRect(rectf, paint);
 		closeButton.draw(canvas);
 		endTurnButton.draw(canvas);
+		playerButton.draw(canvas);
 	}
 }
