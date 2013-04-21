@@ -16,7 +16,7 @@ public class Container {
 	protected int y; //the y coordinate
 	protected int w; //width
 	protected int h; //height
-	protected PuzzleTacticsMainScreen mainScreen;
+	protected DaoMainScreen mainScreen;
 	
 	/**
 	 * Constructor for Container class
@@ -26,7 +26,7 @@ public class Container {
 	 * @param h Height of the container
 	 * @param mainScreen the screen upon which this container is created
 	 */
-	public Container (int x, int y, int w, int h, PuzzleTacticsMainScreen mainScreen) {
+	public Container (int x, int y, int w, int h, DaoMainScreen mainScreen) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
