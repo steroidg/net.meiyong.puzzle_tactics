@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		//force the display to be horizontal
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		setContentView(new PuzzleTacticsMainScreen(this));
+		setContentView(new DaoMainScreen(this));
 	}
 
 	@Override
