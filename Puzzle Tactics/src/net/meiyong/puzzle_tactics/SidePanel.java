@@ -26,7 +26,7 @@ public class SidePanel extends Container{
 	protected Character playerCharacter;
 	
 	
-	public SidePanel (int x, int y, int w, int h, Character playerCharacter, PuzzleTacticsMainScreen mainScreen) {
+	public SidePanel (int x, int y, int w, int h, Character playerCharacter, DaoMainScreen mainScreen) {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "SidePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
@@ -46,7 +46,7 @@ public class SidePanel extends Container{
 					event.getX() > (endTurnButton.getX() - endTurnButton.getWidth()/2)) && 
 					(event.getY() < (endTurnButton.getY() + endTurnButton.getHeight()/2) &&
 							event.getY() > (endTurnButton.getY() - endTurnButton.getHeight()/2))) {
-				mainScreen.newTurn();
+//				mainScreen.newTurn();
 			}
 			
 			// This is the close button

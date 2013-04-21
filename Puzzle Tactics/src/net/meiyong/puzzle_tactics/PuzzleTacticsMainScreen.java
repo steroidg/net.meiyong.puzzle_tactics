@@ -73,8 +73,8 @@ public class PuzzleTacticsMainScreen extends SurfaceView implements SurfaceHolde
 		screenWidth=getWidth();
 		screenHeight=getHeight();
 		playerCharacter = new Character(1, 1, 1, 1, 1, 1);
-		sidePanel = new SidePanel (screenWidth/8/2, screenHeight/2, screenWidth/8, screenHeight, playerCharacter, this);
-		puzzlePanel = new PuzzlePanel ((screenWidth-screenWidth/8)/2+screenWidth/8, screenHeight/2, (screenWidth-screenWidth/8), screenHeight, playerCharacter, this);
+//		sidePanel = new SidePanel (screenWidth/8/2, screenHeight/2, screenWidth/8, screenHeight, playerCharacter, this);
+//		puzzlePanel = new PuzzlePanel ((screenWidth-screenWidth/8)/2+screenWidth/8, screenHeight/2, (screenWidth-screenWidth/8), screenHeight, playerCharacter, this);
 		boolean turnOn = true;
 		this.setThreadStatus(turnOn);
 	}

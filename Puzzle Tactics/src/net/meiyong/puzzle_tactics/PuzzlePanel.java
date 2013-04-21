@@ -24,12 +24,13 @@ public class PuzzlePanel extends Container {
 	private Paint paint = new Paint();
 	private RoundButton[][] buttonArray = new RoundButton[8][8];
 	private int[] selectedButton = new int[2];
+	protected Character playerCharacter;
 
-	public PuzzlePanel (int x, int y, int w, int h, Character playerCharcter, PuzzleTacticsMainScreen mainScreen) {
+	public PuzzlePanel (int x, int y, int w, int h, Character playerCharacter, DaoMainScreen mainScreen) {
 		super (x, y, w, h, mainScreen);
 		Log.d(TAG, "PuzzlePanel constructor x=" + x + " y=" + y + " w=" + w + " h=" + h);
 		rectf = new RectF();
-
+		this.playerCharacter = playerCharacter;
 		resetButtonSelection();
 		pupulatePuzzle();
 		refreshPuzzle();
@@ -215,6 +216,7 @@ public class PuzzlePanel extends Container {
 		if (removeButton) {
 			for (int k=0; k<nButtonsToRemove; k++) {
 				//Log.d(TAG, "buttonToRemove i=" + buttonsToRemove.get(k)[0] + " j=" + buttonsToRemove.get(k)[1]);
+				playerCharacter.addHitPoint(1);
 				buttonArray[buttonsToRemove.get(k)[0]][buttonsToRemove.get(k)[1]] = null;
 				
 			}
